@@ -1,0 +1,88 @@
+/* HERO · mobile first. Sección alta + escenario fijo (sticky): el scroll recorre la animación. */
+.hx{--hand:'Caveat','Segoe Script','Bradley Hand',cursive;height:175vh;position:relative}
+.hx-stick{position:sticky;top:0;height:100svh;overflow:hidden}
+
+/* Móvil: columna. Primero el texto; la hamburguesa ocupa SOLO el espacio que sobra (nunca tapa los botones) */
+.hx-grid{height:100%;display:flex;flex-direction:column;padding-top:76px;padding-bottom:calc(56px + env(safe-area-inset-bottom,0px))}
+.hx-text{display:grid;flex:none}
+.hx-copy,.hx-end{grid-area:1/1;will-change:transform,opacity;position:relative;z-index:2}
+.hx-copy h1{font-size:clamp(38px,min(11.5vw,7.4svh),124px);letter-spacing:-.01em}
+.hx-copy h1 span{display:block;overflow:hidden}
+.hx-copy h1 span i{display:block;font-style:normal;transform:translateY(105%);animation:hxup .9s cubic-bezier(.2,.8,.2,1) forwards}
+.hx-copy h1 span:nth-child(2) i{animation-delay:.12s;color:var(--or)}
+.hx-copy h1 span:nth-child(3) i{animation-delay:.24s}
+@keyframes hxup{to{transform:none}}
+.hx-copy p,.hx-end p{max-width:34ch;color:var(--mute);font-size:16px;margin:12px 0}
+.hx-end{opacity:0;pointer-events:none}
+.hx-end h2{font-size:clamp(36px,min(10vw,7svh),92px);color:var(--ye)}
+@media(max-height:720px){.hx-copy p{display:none}}
+
+.hx-slot{flex:1;min-height:0;position:relative}
+.hx-art{position:absolute;left:50%;top:50%;translate:-50% -50%;height:min(100%,66vw);aspect-ratio:1}
+.hx-ring{position:absolute;inset:0;border:2px dashed var(--or);border-radius:50%;background:radial-gradient(circle,rgba(255,107,44,.18),transparent 68%);will-change:transform}
+.hx-float{position:absolute;inset:0;animation:hxfloat 7s ease-in-out infinite alternate}
+@keyframes hxfloat{from{transform:translateY(0) rotate(0)}to{transform:translateY(-1.8%) rotate(.6deg)}}
+.hx-ring2{position:absolute;inset:7%;border:1px dotted rgba(255,200,87,.45);border-radius:50%;animation:hxspin 40s linear infinite reverse}
+.hx-orbit{position:absolute;inset:0;animation:hxspin 14s linear infinite;pointer-events:none}
+.hx-orbit::after{content:'';position:absolute;top:-5px;left:50%;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--ye);box-shadow:0 0 14px 2px var(--ye)}
+.hx-stage{position:absolute;left:14%;top:10%;width:72%;aspect-ratio:740/841;will-change:transform}
+.hx-layer{animation:hxdrop 1s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i) * .1s + .2s);position:absolute;height:auto;max-width:none;will-change:transform;pointer-events:none;user-select:none;filter:drop-shadow(0 12px 14px rgba(0,0,0,.5))}
+
+@keyframes hxdrop{from{translate:0 -80px;rotate:-16deg;opacity:0}}
+
+/* Notas con flecha: viven dentro del escenario y viajan con su capa */
+.hx-note{position:absolute;width:56%;z-index:5;translate:0 -100%;pointer-events:none;will-change:transform}
+.hx-note.l{right:92%}
+.hx-note.r{left:92%}
+.hx-note-in{display:flex;flex-direction:column;gap:2px;opacity:var(--n,0);transform:translateY(calc((1 - var(--n,0)) * 10px))}
+.l .hx-note-in{align-items:flex-end;text-align:right}
+.r .hx-note-in{align-items:flex-start;text-align:left}
+.hx-note b{font:700 clamp(15px,4.1vw,28px)/1.02 var(--hand);color:var(--ink);text-shadow:0 1px 10px #000,0 0 3px #000}
+.hx-note svg{width:clamp(26px,7.5vw,58px);height:auto;overflow:visible;fill:none;stroke:var(--ye);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 1px 4px #000)}
+.hx-note.r svg{transform:scaleX(-1)}
+.hx-note .a-line{stroke-dasharray:100;stroke-dashoffset:calc((1 - var(--n,0)) * 100)}
+.hx-note .a-head{stroke-dasharray:100;stroke-dashoffset:calc((1 - clamp(0, (var(--n,0) - .55) * 2.2, 1)) * 100)}
+.hx-hint{position:absolute;left:20px;bottom:calc(58px + env(safe-area-inset-bottom,0px));color:var(--mute);font-size:13px;margin:0}
+
+/* Contenido alrededor: chips flotantes (móvil: 2), sello giratorio (solo escritorio) y cinta de texto */
+.hx-badge{display:none;position:absolute;z-index:6;width:26%;top:-4%;left:-6%;animation:hxspin 22s linear infinite;pointer-events:none;opacity:var(--chip,1)}
+.hx-badge text{font:700 10.5px var(--s);letter-spacing:.06em;fill:var(--ye);text-transform:uppercase}
+@keyframes hxspin{to{transform:rotate(360deg)}}
+.hx-chip{position:absolute;z-index:6;opacity:var(--chip,1);transform:translate3d(calc(var(--px,0) * var(--par,0) * 1px),calc(var(--py,0) * var(--par,0) * .6px),0);pointer-events:none;will-change:transform}
+.hx-chip span{display:flex;align-items:center;padding:6px 10px;background:rgba(21,21,21,.92);border:1px solid var(--line);border-left:3px solid var(--or);font-size:12px;font-weight:500;white-space:nowrap;animation:hxbob 5.5s ease-in-out infinite alternate;box-shadow:0 12px 24px -12px #000}
+@keyframes hxbob{from{translate:0 -4px}to{translate:0 5px}}
+.hx-chip.c0{top:-6%;right:-20%}
+.hx-chip.c1{bottom:-2%;left:-20%}
+.hx-chip.c2{display:none}
+
+/* Cinta infinita: 6 copias idénticas y se desplaza exactamente 1/6, así el bucle no tiene saltos ni huecos */
+.hx-marquee{position:absolute;left:0;right:0;bottom:0;padding-bottom:env(safe-area-inset-bottom,0px);background:var(--or);color:#0B0B0B;overflow:hidden;z-index:7;contain:layout paint}
+.hx-marquee>div{display:flex;width:max-content;animation:hxmq 26s linear infinite;will-change:transform}
+.hx-marquee.off>div{animation-play-state:paused}
+.hx-marquee span{display:flex}
+.hx-marquee b{font:400 20px/1 var(--d);text-transform:uppercase;padding:13px 0;display:flex;align-items:center;white-space:nowrap}
+.hx-marquee i{font-style:normal;margin:0 22px;font-size:14px}
+@keyframes hxmq{to{transform:translate3d(-16.6667%,0,0)}}
+
+/* Escritorio: texto a la izquierda, hamburguesa a la derecha */
+@media(hover:hover){.hx-marquee:hover>div{animation-play-state:paused}}
+@media(min-width:900px){
+  .hx-grid{display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:32px;padding-bottom:56px}
+  .hx-copy h1{font-size:clamp(56px,8vw,124px)}
+  .hx-copy p,.hx-end p{font-size:18px}
+  .hx-slot{flex:none;height:min(58svh,46vw,600px);justify-self:center;aspect-ratio:1}
+  .hx-art{height:100%}
+  .hx-note{width:46%}
+  .hx-note b{font-size:clamp(22px,2.2vw,32px)}
+  .hx-badge{display:block}
+  .hx-chip span{font-size:13px;padding:8px 14px}
+  .hx-chip.c0{top:8%;right:-4%}
+  .hx-chip.c1{top:50%;bottom:auto;left:auto;right:-10%}
+  .hx-chip.c2{display:block;bottom:6%;left:2%}
+  .hx-hint{bottom:70px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hx-copy h1 span i,.hx-float,.hx-badge,.hx-chip span,.hx-ring2,.hx-orbit{animation:none;transform:none}
+  /* styles.css apaga TODAS las animaciones con !important; la cinta se exceptúa (más lenta) por tener mayor especificidad */
+  .hx-marquee>div{animation-name:hxmq!important;animation-duration:70s!important;animation-iteration-count:infinite!important}
+}
